@@ -52,3 +52,17 @@ The available methods for this resource are GET and POST on /v1/professionals/:i
 ## Getting all professionals available in a range of time
 
 GET /professionals?availableFrom=1980&availableTo=2460
+
+## Booking a time slot
+
+Customer can book one hour by passing the id of the professional and the starting time.
+As a business rule, Customer can only book exactly one hour
+
+POST /bookings
+
+```js
+{
+  professionalId: number
+  startTime: number
+}
+```
