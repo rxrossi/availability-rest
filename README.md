@@ -49,3 +49,6 @@ Such format integrates nicely with `react-available-times`.
 
 The available methods for this resource are GET and POST on /v1/professionals/:id/availability
 
+## Getting all professionals available in a range of time
+
+GET /professionals?availableFrom=1980&availableTo=2460
