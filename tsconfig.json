@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "target": "es2016",
+    "esModuleInterop": true
+  }
+}
