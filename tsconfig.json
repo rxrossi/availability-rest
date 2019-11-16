@@ -2,6 +2,8 @@
   "compilerOptions": {
     "types": ["node", "jest"],
     "target": "es2016",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "commonjs"
   }
 }

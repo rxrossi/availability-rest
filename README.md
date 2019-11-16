@@ -2,6 +2,18 @@
 
 An API to manage week availability of professionals and allow customers to book time slots
 
+This API uses PostgreSQL 11.5 and Node.js 12.13.0.
+
+## Running tests
+
+```bash
+createdb availability-rest-test-db
+npm install
+npm test
+```
+
+It is also possible to run in watch mode with `npm run test:watch`
+
 ## Reading and updating availability of professionals
 
 Availability is stored as an array of objects like the following:
