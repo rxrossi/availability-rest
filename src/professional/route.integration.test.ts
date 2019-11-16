@@ -1,5 +1,5 @@
 import request from "supertest"
-import server from "../index"
+import server from "../express"
 import Professional from "./model"
 import setupDbHooks from "../setupJestHooks"
 

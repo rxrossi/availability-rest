@@ -1,18 +1,11 @@
-import express from "express"
-import bodyParser from "body-parser"
-import helmet from "helmet"
-import professionalsRouter from "./professional/router"
+import server from "./express"
+import setupDatabase from "./setupDatabase"
 
-const app = express()
-app.use(bodyParser.json())
-app.use(helmet())
+const port = process.env.PORT || 3000
 
-app.get("/", (_, res) =>
-  res.json({
-    name: "availability-api"
-  })
-)
+run()
 
-app.use("/v1/professionals", professionalsRouter)
-
-export default app
+async function run() {
+  await setupDatabase()
+  server.listen(port, () => console.log("Express server running at", port))
+}
