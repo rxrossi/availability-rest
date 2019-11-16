@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import helmet from "helmet"
+import professionalsRouter from "./professional/router"
 
 const app = express()
 app.use(bodyParser.json())
@@ -11,5 +12,7 @@ app.get("/", (_, res) =>
     name: "availability-api"
   })
 )
+
+app.use("/v1/professionals", professionalsRouter)
 
 export default app
