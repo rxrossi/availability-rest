@@ -1,8 +1,11 @@
 import request from "supertest"
-import server from "./index"
+import server from "../express"
+import setupDbHooks from "../setupJestHooks"
 
-describe("index route", () => {
-  it("returns json with the name of the app", async () => {
+setupDbHooks()
+
+describe("GET index", () => {
+  it("returns an empty array", async () => {
     const app = request(server)
 
     await app
@@ -12,7 +15,7 @@ describe("index route", () => {
       .expect(200)
       .then(response => {
         expect(response.body).toEqual({
-          name: "availability-api"
+          name: "availability-rest"
         })
       })
   })

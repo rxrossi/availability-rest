@@ -4,6 +4,15 @@ An API to manage week availability of professionals and allow customers to book 
 
 This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 
+## Setup
+
+```bash
+createdb availability-rest
+npm install
+npm run build
+npm start
+```
+
 ## Running tests
 
 ```bash
@@ -28,11 +37,12 @@ Availability is stored as an array of objects like the following:
 Where `start` and `end` are the numbers of minutes from the start of the week, 0 represents 0 minutes of Sunday, 1440 represents 0 minutes of Monday
 
 Bellow there is an example of payload for POST and GET methods with comments of the time that they represent
+
 ```js
-[
+;[
   {
-    start: 1980, // Monday 9am 
-    end: 2160 // Monday 12pm 
+    start: 1980, // Monday 9am
+    end: 2160 // Monday 12pm
   },
   {
     start: 2220, // Monday 1pm
@@ -63,11 +73,11 @@ The available methods for this resource are GET and POST on /v1/professionals/:i
 
 ## Getting all professionals available in a range of time
 
-GET /v1/professionals?availableFrom=1980&availableTo=2460
+GET /v1/professionals?availableFrom=ISOdateString&availableTo=ISOdateString
 
 ## Booking a time slot
 
-Customer can book one hour by passing the id of the professional and the starting time.
+Customer can book one hour by passing the id of the professional and the starting time in ISO format.
 As a business rule, Customer can only book exactly one hour
 
 POST /v1/bookings
@@ -75,6 +85,6 @@ POST /v1/bookings
 ```js
 {
   professionalId: number
-  startTime: number
+  startTime: Date
 }
 ```
