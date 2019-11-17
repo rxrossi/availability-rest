@@ -7,6 +7,61 @@ import { UserType } from "../authorization/userType"
 
 setupJestHooks()
 
+describe("PUT /v1/availabilities", () => {
+  describe("when unauthenticated", () => {
+    it("returns an 401", async () => {
+      const app = request(server)
+
+      await app
+        .put("/v1/availabilities")
+        .set("Accept", "application/json")
+        .expect(401)
+    })
+  })
+
+  describe("when sending data in invalid format", () => {
+    it("returns a 422", async () => {
+      const app = request(server)
+
+      const professional = await Professional.query().upsertGraph({
+        name: "Mary Doe",
+        password: "123456",
+        availabilities: [
+          {
+            start: 1980,
+            end: 2160
+          }
+        ]
+      })
+
+      const token = createToken({
+        email: professional.email,
+        userType: UserType.Professional,
+        userId: professional.id
+      })
+
+      await app
+        .put("/v1/availabilities")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          start: 1980,
+          end: 2160
+        })
+        .set("Accept", "application/json")
+        .expect(422)
+        .then(response => {
+          expect(response.body).toMatchObject({
+            details: [
+              {
+                message: '"value" must be an array'
+              }
+            ]
+          })
+        })
+    })
+  })
+})
+
 describe("GET /v1/availabilities/", () => {
   describe("when requesting unauthenticated", () => {
     it("returns an 401", async () => {
