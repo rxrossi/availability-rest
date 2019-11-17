@@ -8,10 +8,11 @@ import { isProduction } from "../environment"
 import Professional from "../professional/model"
 import getRequestUserMiddleware from "../authorization/getRequestUserMiddleware"
 import expressErrorHandler from "../errors/expressErrorHandler"
+import Customer from "../customer/model"
 
 declare module "express-serve-static-core" {
   interface Request {
-    user?: Professional
+    user?: Professional | Customer
   }
 }
 

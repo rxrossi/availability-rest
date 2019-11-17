@@ -71,6 +71,10 @@ describe("GET /v1/professional", () => {
     )
   })
 
+  describe("when querying professionals available by date range and date range is in the past", () => {
+    it.todo("throws an error")
+  })
+
   describe("when there are not professionals", () => {
     it("returns an empty array", async () => {
       const app = request(server)

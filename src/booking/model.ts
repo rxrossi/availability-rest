@@ -2,10 +2,10 @@ import Customer from "../customer/model"
 import BaseModel from "../baseModel"
 
 export default class Booking extends BaseModel {
-  static tableName = "customers"
+  static tableName = "bookings"
 
   readonly id!: number
-  date!: Date
+  dateTime!: Date
 
   customer!: Customer
   customerId!: number
