@@ -8,6 +8,17 @@ import { UserType } from "../authorization/userType"
 setupJestHooks()
 
 describe("GET /v1/availabilities/", () => {
+  describe("when requesting unauthenticated", () => {
+    it("returns an 401", async () => {
+      const app = request(server)
+
+      await app
+        .get("/v1/availabilities")
+        .set("Accept", "application/json")
+        .expect(401)
+    })
+  })
+
   describe("when the authenticated professional has availabilities", () => {
     it("returns an empty array", async () => {
       const app = request(server)

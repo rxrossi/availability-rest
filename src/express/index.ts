@@ -6,6 +6,7 @@ import availabilitiesRouter from "../availability/router"
 import { isProduction } from "../environment"
 import Professional from "../professional/model"
 import getRequestUserMiddleware from "../authorization/getRequestUserMiddleware"
+import expressErrorHandler from "../errors/expressErrorHandler"
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -31,5 +32,7 @@ server.get("/", (_req, res) => {
 server.use("/v1/professionals", professionalsRouter)
 
 server.use("/v1/availabilities", availabilitiesRouter)
+
+server.use(expressErrorHandler)
 
 export default server
