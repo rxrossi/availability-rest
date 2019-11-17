@@ -16,6 +16,7 @@ describe("PUT /v1/availabilities", () => {
       const professional = await Professional.query().upsertGraph({
         name: "Mary Doe",
         password: "123456",
+        email: "mary@example.org",
         availabilities: [
           {
             start: 1980,
@@ -87,6 +88,7 @@ describe("PUT /v1/availabilities", () => {
       const professional = await Professional.query().upsertGraph({
         name: "Mary Doe",
         password: "123456",
+        email: "mary@example.org",
         availabilities: [
           {
             start: 1980,
@@ -142,6 +144,7 @@ describe("GET /v1/availabilities/", () => {
       const professional = await Professional.query().upsertGraph({
         name: "Mary Doe",
         password: "123456",
+        email: "mary@example.org",
         availabilities: [
           {
             start: 1980,
@@ -153,6 +156,7 @@ describe("GET /v1/availabilities/", () => {
       await Professional.query().upsertGraph({
         name: "Annie Smith",
         password: "123456",
+        email: "annie@example.org",
         availabilities: [
           {
             start: 10,

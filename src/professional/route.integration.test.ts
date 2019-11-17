@@ -27,7 +27,8 @@ describe("GET /v1/professional", () => {
 
       await Professional.query().insert({
         name: "Mary Doe",
-        password: "123456"
+        password: "123456",
+        email: "mary@example.org"
       })
 
       await app
