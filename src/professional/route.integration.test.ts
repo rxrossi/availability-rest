@@ -65,6 +65,10 @@ describe("GET /v1/professional", () => {
           ])
         })
     })
+
+    it.todo(
+      "returns a list excluding professionals who would not be available due to having bookings"
+    )
   })
 
   describe("when there are not professionals", () => {
