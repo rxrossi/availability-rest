@@ -4,14 +4,28 @@ An API to manage week availability of professionals and allow customers to book 
 
 This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 
+## Environment variables
+
+DATABASE_URL - The URL for PostgreSQL database if it is remote
+JWT_TOKEN_SECRET = A string used to generate JWT tokens
+
+## Terms
+Professional - Person who provides services
+Customer - Person who books professional's time
+User - a Customer or professional
+Date - YYYY-MM-DD
+DateTime = YYYY-MM-DDThh:mm:ss.sss
+
 ## Setup
 
 ```bash
-createdb availability-rest
+createdb availability-rest 
 npm install
 npm run build
 npm start
 ```
+
+You can also use a external database by providing a url on env var `DATABASE_URL`, this way the database created on previous steps would not be used or even needed.
 
 ## Running tests
 
@@ -36,7 +50,7 @@ Availability is stored as an array of objects like the following:
 
 Where `start` and `end` are the numbers of minutes from the start of the week, 0 represents 0 minutes of Sunday, 1440 represents 0 minutes of Monday
 
-Bellow there is an example of payload for POST and GET methods with comments of the time that they represent
+Bellow there is an example of payload for PUT and GET methods with comments of the time that they represent
 
 ```js
 ;[
@@ -69,7 +83,7 @@ Bellow there is an example of payload for POST and GET methods with comments of 
 
 Such format integrates nicely with `react-available-times`.
 
-The available methods for this resource are GET and POST on /v1/professionals/:id/availability
+The available methods for this resource are GET and PUT on /v1/professionals/:id/availability
 
 ## Getting all professionals available in a range of time
 

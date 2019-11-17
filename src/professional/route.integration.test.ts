@@ -1,9 +1,9 @@
 import request from "supertest"
 import server from "../express"
 import Professional from "./model"
-import setupDbHooks from "../setupJestHooks"
+import setupJestHooks from "../setupJestHooks"
 
-setupDbHooks()
+setupJestHooks()
 
 describe("GET /v1/professional", () => {
   describe("when there are not professionals", () => {
@@ -25,7 +25,10 @@ describe("GET /v1/professional", () => {
     it("returns an array of professionals", async () => {
       const app = request(server)
 
-      await Professional.query().insert({ name: "Mary Doe" })
+      await Professional.query().insert({
+        name: "Mary Doe",
+        password: "123456"
+      })
 
       await app
         .get("/v1/professionals")
