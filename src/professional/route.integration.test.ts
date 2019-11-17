@@ -37,7 +37,9 @@ describe("GET /v1/professional", () => {
         .expect("Content-Type", /json/)
         .expect(200)
         .then(response => {
-          expect(response.body).toMatchObject([{ name: "Mary Doe" }])
+          expect(response.body).toEqual([
+            { id: expect.any(Number), name: "Mary Doe" }
+          ])
         })
     })
   })

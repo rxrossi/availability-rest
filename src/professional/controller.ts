@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 
 export default class ProfessionalsController {
   async getAll(_req: Request, res: Response) {
-    const professionals = await Professional.query()
+    const professionals = await Professional.query().select("name")
 
     res.json(professionals)
   }
