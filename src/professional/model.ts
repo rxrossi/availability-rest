@@ -1,12 +1,32 @@
 import { Model } from "objection"
+import bcrypt from "bcryptjs"
 import Availability from "../availability/model"
 
 export default class Professional extends Model {
   static tableName = "professionals"
 
+  readonly id!: number
   name!: string
+  email!: string
+  password!: string
 
   availabilities!: Availability[]
+
+  async $beforeInsert(): Promise<void> {
+    if (this.password) {
+      this.password = await encryptedPassword(this.password)
+    }
+  }
+
+  async $beforeUpdate(): Promise<void> {
+    if (this.password) {
+      this.password = await encryptedPassword(this.password)
+    }
+  }
+
+  isPasswordCorrect(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password)
+  }
 
   static get relationMappings(): any {
     const Availability = require("../availability/model").default
@@ -22,4 +42,9 @@ export default class Professional extends Model {
       }
     }
   }
+}
+
+async function encryptedPassword(password: string): Promise<string> {
+  const salt = await bcrypt.genSalt(10)
+  return bcrypt.hash(password, salt)
 }

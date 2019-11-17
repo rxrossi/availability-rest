@@ -1,48 +1,49 @@
 import request from "supertest"
 import server from "../express"
-import setupDbHooks from "../setupJestHooks"
+import setupJestHooks from "../setupJestHooks"
 import Professional from "../professional/model"
+import createToken from "../authorization/generateToken"
+import { UserType } from "../authorization/userType"
 
-setupDbHooks()
+setupJestHooks()
 
 describe("GET /v1/availabilities/", () => {
   describe("when the authenticated professional has availabilities", () => {
     it("returns an empty array", async () => {
       const app = request(server)
 
-      await Professional.query().upsertGraph({
+      const professional = await Professional.query().upsertGraph({
         name: "Mary Doe",
+        password: "123456",
         availabilities: [
           {
-            start: 1980, // Monday 9am
-            end: 2160 // Monday 12pm
-          },
-          {
-            start: 2220, // Monday 1pm
-            end: 2460 // Monday 5pm
-          },
-          {
-            start: 3420, // Tuesday 9am
-            end: 3600 // Tuesday 12pm
-          },
-          {
-            start: 3660, // Tuesday 1pm
-            end: 3900 // Tuesday 5pm
-          },
-          {
-            start: 4860, // Wednesday 9am
-            end: 5040 // Wednesday 12pm
-          },
-          {
-            start: 5100, // Wednesday 1pm
-            end: 5340 // Wednesday 5pm
+            start: 1980,
+            end: 2160
           }
         ]
+      })
+
+      await Professional.query().upsertGraph({
+        name: "Annie Smith",
+        password: "123456",
+        availabilities: [
+          {
+            start: 10,
+            end: 20
+          }
+        ]
+      })
+
+      const token = createToken({
+        email: professional.email,
+        userType: UserType.Professional,
+        userId: professional.id
       })
 
       await app
         .get("/v1/availabilities")
         .set("Accept", "application/json")
+        .set("Authorization", `Bearer ${token}`)
         .expect("Content-Type", /json/)
         .expect(200)
         .then(response => {
@@ -50,26 +51,6 @@ describe("GET /v1/availabilities/", () => {
             {
               start: 1980,
               end: 2160
-            },
-            {
-              start: 2220,
-              end: 2460
-            },
-            {
-              start: 3420,
-              end: 3600
-            },
-            {
-              start: 3660,
-              end: 3900
-            },
-            {
-              start: 4860,
-              end: 5040
-            },
-            {
-              start: 5100,
-              end: 5340
             }
           ])
         })
