@@ -1,6 +1,22 @@
+import request from "supertest"
+import server from "../express"
+import Booking from "./model"
+import setupJestHooks from "../setupJestHooks"
+
+setupJestHooks()
+
 describe("POST /v1/bookings", () => {
   describe("when not authenticated", () => {
-    it.todo("returns an error")
+    it("returns an error", async () => {
+      const app = request(server)
+
+      await app
+        .post("/v1/bookings")
+        .set("Accept", "application/json")
+        .expect(401)
+
+      expect(await Booking.query()).toEqual([])
+    })
   })
 
   describe("when authenticated as professional", () => {
