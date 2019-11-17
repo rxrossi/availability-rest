@@ -50,7 +50,7 @@ Availability is stored as an array of objects like the following:
 
 Where `start` and `end` are the numbers of minutes from the start of the week, 0 represents 0 minutes of Sunday, 1440 represents 0 minutes of Monday
 
-Bellow there is an example of payload for POST and GET methods with comments of the time that they represent
+Bellow there is an example of payload for PUT and GET methods with comments of the time that they represent
 
 ```js
 ;[
@@ -83,7 +83,7 @@ Bellow there is an example of payload for POST and GET methods with comments of 
 
 Such format integrates nicely with `react-available-times`.
 
-The available methods for this resource are GET and POST on /v1/professionals/:id/availability
+The available methods for this resource are GET and PUT on /v1/professionals/:id/availability
 
 ## Getting all professionals available in a range of time
 

@@ -18,7 +18,18 @@ export default class AvailabilityController {
     const professional = professionalOrThrow(req)
 
     const availabilities = availabilityPutValidator(req.body)
-    console.log(availabilities)
+
+    await Availability.query()
+      .where("professional_id", professional.id)
+      .delete()
+      .catch(console.error)
+
+    await Availability.query().insert(
+      availabilities.map(availability => ({
+        ...availability,
+        professional_id: professional.id
+      }))
+    )
 
     res.json(availabilities)
   }
