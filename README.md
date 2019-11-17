@@ -15,6 +15,7 @@ Customer - Person who books professional's time
 User - a Customer or professional
 Date - YYYY-MM-DD
 DateTime = YYYY-MM-DDThh:mm:ss.sss
+ISODateString = YYYY-MM-DDThh:mm:ss.sss
 
 ## Setup
 
@@ -87,7 +88,7 @@ The available methods for this resource are GET and PUT on /v1/professionals/:id
 
 ## Getting all professionals available in a range of time
 
-GET /v1/professionals?availableFrom=ISOdateString&availableTo=ISOdateString
+GET /v1/professionals?availableFrom=ISODateString&availableTo=ISODateString
 
 ## Booking a time slot
 
