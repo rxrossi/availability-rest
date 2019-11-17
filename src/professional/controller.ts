@@ -1,7 +1,6 @@
 import { QueryBuilder } from "objection"
 import Professional from "./model"
 import { Request, Response } from "express"
-import BadInputError from "../errors/badInput"
 
 export default class ProfessionalsController {
   async getAll(req: Request, res: Response) {

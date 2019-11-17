@@ -1,7 +1,8 @@
 import { Model } from "objection"
 import Professional from "../professional/model"
+import BaseModel from "../baseModel"
 
-export default class Availability extends Model {
+export default class Availability extends BaseModel {
   static tableName = "availabilities"
 
   professional!: Professional

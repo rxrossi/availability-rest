@@ -65,6 +65,14 @@ describe("GET /v1/professional", () => {
           ])
         })
     })
+
+    it.todo(
+      "returns a list excluding professionals who would not be available due to having bookings"
+    )
+  })
+
+  describe("when querying professionals available by date range and date range is in the past", () => {
+    it.todo("throws an error")
   })
 
   describe("when there are not professionals", () => {

@@ -16,7 +16,7 @@ export default function setupJestHooks(): void {
 }
 
 function truncateTables(knex: Knex): Promise<any> {
-  const tables = ["professionals", "availabilities"]
+  const tables = ["professionals", "availabilities", "customers", "bookings"]
 
   return Promise.all(
     tables.map(table => knex.raw("truncate table " + table + " cascade"))

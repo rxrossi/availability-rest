@@ -1,8 +1,10 @@
 import { Model } from "objection"
 import bcrypt from "bcryptjs"
 import Availability from "../availability/model"
+import BaseModel from "../baseModel"
+import Booking from "../booking/model"
 
-export default class Professional extends Model {
+export default class Professional extends BaseModel {
   static tableName = "professionals"
 
   readonly id!: number
@@ -11,14 +13,17 @@ export default class Professional extends Model {
   password!: string
 
   availabilities!: Availability[]
+  bookings!: Booking[]
 
   async $beforeInsert(): Promise<void> {
+    super.$beforeInsert()
     if (this.password) {
       this.password = await encryptedPassword(this.password)
     }
   }
 
   async $beforeUpdate(): Promise<void> {
+    super.$beforeUpdate()
     if (this.password) {
       this.password = await encryptedPassword(this.password)
     }
@@ -30,6 +35,7 @@ export default class Professional extends Model {
 
   static get relationMappings(): any {
     const Availability = require("../availability/model").default
+    const Booking = require("../booking/model").default
 
     return {
       availabilities: {
@@ -37,6 +43,14 @@ export default class Professional extends Model {
         modelClass: Availability,
         join: {
           from: "availabilities.professional_id",
+          to: "professionals.id"
+        }
+      },
+      bookings: {
+        relation: Model.HasManyRelation,
+        modelClass: Booking,
+        join: {
+          from: "bookings.professional_id",
           to: "professionals.id"
         }
       }
