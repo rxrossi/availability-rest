@@ -1,8 +1,9 @@
 import { Model } from "objection"
 import bcrypt from "bcryptjs"
 import Availability from "../availability/model"
+import BaseModel from "../baseModel"
 
-export default class Professional extends Model {
+export default class Professional extends BaseModel {
   static tableName = "professionals"
 
   readonly id!: number
@@ -13,12 +14,14 @@ export default class Professional extends Model {
   availabilities!: Availability[]
 
   async $beforeInsert(): Promise<void> {
+    super.$beforeInsert()
     if (this.password) {
       this.password = await encryptedPassword(this.password)
     }
   }
 
   async $beforeUpdate(): Promise<void> {
+    super.$beforeUpdate()
     if (this.password) {
       this.password = await encryptedPassword(this.password)
     }

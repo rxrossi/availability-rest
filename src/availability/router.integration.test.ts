@@ -57,14 +57,18 @@ describe("PUT /v1/availabilities", () => {
         {
           start: 1980,
           end: 2160,
-          professional_id: professional.id,
-          id: expect.any(Number)
+          professionalId: professional.id,
+          id: expect.any(Number),
+          createdAt: expect.any(Date),
+          updatedAt: null
         },
         {
           start: 2220,
           end: 2460,
-          professional_id: professional.id,
-          id: expect.any(Number)
+          professionalId: professional.id,
+          id: expect.any(Number),
+          createdAt: expect.any(Date),
+          updatedAt: null
         }
       ])
     })
