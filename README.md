@@ -82,9 +82,10 @@ Bellow there is an example of payload for PUT and GET methods with comments of t
 ]
 ```
 
-Such format integrates nicely with `react-available-times`.
+Such format integrates nicely with libraries like `react-available-times`.
 
-The available methods for this resource are GET and PUT on /v1/professionals/:id/availability
+The available methods for this resource are GET and PUT on /v1/availabilities
+It is necessary to be authenticated as a professional to use this route, and results of GET are the professiona'ls availabilities and PUT replaces the availabilities of the professional
 
 ## Getting all professionals available in a range of time
 
