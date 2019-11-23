@@ -26,7 +26,9 @@ npm run build
 npm start
 ```
 
-You can also use a external database by providing a url on env var `DATABASE_URL`, this way the database created on previous steps would not be used or even needed.
+If you want initial data, you can run `npm run seeds`
+
+You can also use a external database by providing a url on env var `DATABASE_URL`, this way the `createdb` step would not be needed.
 
 ## Running tests
 
@@ -38,7 +40,9 @@ npm test
 
 It is also possible to run in watch mode with `npm run test:watch`
 
-## Reading and updating availability of professionals
+## Usage
+
+### Reading and updating availability of professionals
 
 Availability is stored as an array of objects like the following:
 
@@ -54,7 +58,7 @@ Where `start` and `end` are the numbers of minutes from the start of the week, 0
 Bellow there is an example of payload for PUT and GET methods with comments of the time that they represent
 
 ```js
-;[
+[
   {
     start: 1980, // Monday 9am
     end: 2160 // Monday 12pm
@@ -85,7 +89,8 @@ Bellow there is an example of payload for PUT and GET methods with comments of t
 Such format integrates nicely with libraries like `react-available-times`.
 
 The available methods for this resource are GET and PUT on /v1/availabilities
-It is necessary to be authenticated as a professional to use this route, and results of GET are the professiona'ls availabilities and PUT replaces the availabilities of the professional
+
+It is necessary to be authenticated as a professional to use this route, and results of GET are the professional's availabilities and PUT replaces the availabilities of the professional
 
 ## Getting all professionals available in a range of time
 
@@ -104,3 +109,5 @@ POST /v1/bookings
   startTime: Date
 }
 ```
+
+User must be authenticated as customer to be able to book
