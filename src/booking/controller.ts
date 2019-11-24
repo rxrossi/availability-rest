@@ -8,7 +8,13 @@ export default class BookingController {
   async get(req: Request, res: Response) {
     const customer = customerOrThrow(req)
 
-    const bookings = await Booking.query().where({ customer_id: customer.id })
+    const bookings = await Booking.query()
+      .select("id", "date_time")
+      .where({ customer_id: customer.id })
+      .eager("professional")
+      .modifyEager("professional", builder => {
+        builder.select("id", "name")
+      })
 
     res.json(bookings)
   }
