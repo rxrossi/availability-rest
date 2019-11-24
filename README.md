@@ -110,6 +110,33 @@ It is necessary to be authenticated as a professional to use this route, and res
 
 GET  `/v1/professionals?availableFrom=ISODateString&availableTo=ISODateString`
 
+Response example: 
+
+```json
+            {
+              id: expect.any(Number),
+              name: "Mary Doe",
+              bookingSlots: ["2019-11-18T11:00:00.000-00:00"]
+            },
+            {
+              id: expect.any(Number),
+              name: "Annie Smith",
+              bookingSlots: [
+                "2019-11-18T09:30:00.000-00:00",
+                "2019-11-18T10:00:00.000-00:00",
+                "2019-11-18T10:30:00.000-00:00",
+                "2019-11-18T11:00:00.000-00:00",
+                "2019-11-18T14:00:00.000-00:00",
+                "2019-11-18T14:30:00.000-00:00",
+                "2019-11-18T15:00:00.000-00:00",
+                "2019-11-18T15:30:00.000-00:00",
+                "2019-11-18T16:00:00.000-00:00",
+                "2019-11-18T16:30:00.000-00:00",
+                "2019-11-18T17:00:00.000-00:00"
+              ]
+            }
+```
+
 ## Booking a time slot
 
 Customer can book one hour by passing the id of the professional and the starting time in ISO format.
