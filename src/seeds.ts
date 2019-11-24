@@ -1,6 +1,11 @@
 import Professional from "./professional/model"
 import Customer from "./customer/model"
 import setupDatabase from "./setupDatabase"
+import { isProduction } from "./environment"
+
+if (!isProduction()) {
+  require("dotenv").config()
+}
 
 setupDatabase({ skipMigrations: true })
   .then(seeds)
@@ -59,13 +64,13 @@ async function seeds(): Promise<void> {
         id: 1,
         name: "Customer 1",
         email: "customer1@example.com",
-        password: "124356"
+        password: "123456"
       },
       {
         id: 2,
         name: "Customer 2",
         email: "customer2@example.com",
-        password: "124356"
+        password: "123456"
       }
     ],
     {

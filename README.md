@@ -6,7 +6,7 @@ This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 
 ## Environment variables
 
-DATABASE_URL - The URL for PostgreSQL database if it is remote
+DATABASE_URL - The URL for PostgreSQL database if it is remote, if running locally, do not set it
 JWT_TOKEN_SECRET = A string used to generate JWT tokens
 
 ## Terms
