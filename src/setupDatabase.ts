@@ -4,7 +4,7 @@ import { knexConfigKey } from "./environment"
 import knexConfigs from "../knexfile"
 
 export default async function setupDatabase({
-  skipMigrations = true
+  skipMigrations = false
 }: {
   skipMigrations?: boolean
 } = {}): Promise<Knex> {
