@@ -10,6 +10,7 @@ This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 - JWT_TOKEN_SECRET = A string used to generate JWT tokens
 
 ## Terms
+
 - Professional - Person who provides services
 - Customer - Person who books professional's time
 - User - a Customer or professional
@@ -20,7 +21,7 @@ This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 ## Setup
 
 ```bash
-createdb availability-rest 
+createdb availability-rest
 npm install
 npm run build
 npm start
@@ -55,7 +56,6 @@ The do a POST at /v1/login with the payload in the following format
 
 If the correct credentials are sent, a JWT token will be returned, use it on request in the standard form `Bearer token`
 
-
 ### Reading and updating availability of professionals
 
 Availability is stored as an array of objects like the following:
@@ -72,7 +72,7 @@ Where `start` and `end` are the numbers of minutes from the start of the week, 0
 Bellow there is an example of payload for PUT and GET methods with comments of the time that they represent
 
 ```js
-[
+;[
   {
     start: 1980, // Monday 9am
     end: 2160 // Monday 12pm
@@ -108,33 +108,35 @@ It is necessary to be authenticated as a professional to use this route, and res
 
 ## Getting all professionals available in a range of time
 
-GET  `/v1/professionals?availableFrom=ISODateString&availableTo=ISODateString`
+GET `/v1/professionals?availableFrom=ISODateString&availableTo=ISODateString`
 
-Response example: 
+Response example:
 
-```json
-            {
-              id: expect.any(Number),
-              name: "Mary Doe",
-              bookingSlots: ["2019-11-18T11:00:00.000-00:00"]
-            },
-            {
-              id: expect.any(Number),
-              name: "Annie Smith",
-              bookingSlots: [
-                "2019-11-18T09:30:00.000-00:00",
-                "2019-11-18T10:00:00.000-00:00",
-                "2019-11-18T10:30:00.000-00:00",
-                "2019-11-18T11:00:00.000-00:00",
-                "2019-11-18T14:00:00.000-00:00",
-                "2019-11-18T14:30:00.000-00:00",
-                "2019-11-18T15:00:00.000-00:00",
-                "2019-11-18T15:30:00.000-00:00",
-                "2019-11-18T16:00:00.000-00:00",
-                "2019-11-18T16:30:00.000-00:00",
-                "2019-11-18T17:00:00.000-00:00"
-              ]
-            }
+```js
+[
+  {
+    id: number,
+    name: "Mary Doe",
+    bookingSlots: ["2019-11-18T11:00:00.000-00:00"]
+  },
+  {
+    id: number,
+    name: "Annie Smith",
+    bookingSlots: [
+      "2019-11-18T09:30:00.000-00:00",
+      "2019-11-18T10:00:00.000-00:00",
+      "2019-11-18T10:30:00.000-00:00",
+      "2019-11-18T11:00:00.000-00:00",
+      "2019-11-18T14:00:00.000-00:00",
+      "2019-11-18T14:30:00.000-00:00",
+      "2019-11-18T15:00:00.000-00:00",
+      "2019-11-18T15:30:00.000-00:00",
+      "2019-11-18T16:00:00.000-00:00",
+      "2019-11-18T16:30:00.000-00:00",
+      "2019-11-18T17:00:00.000-00:00"
+    ]
+  }
+]
 ```
 
 ## Booking a time slot
