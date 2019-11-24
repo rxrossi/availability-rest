@@ -5,6 +5,14 @@ import Booking from "./model"
 import OneLinerError from "../errors/oneLinerError"
 
 export default class BookingController {
+  async get(req: Request, res: Response) {
+    const customer = customerOrThrow(req)
+
+    const bookings = await Booking.query().where({ customer_id: customer.id })
+
+    res.json(bookings)
+  }
+
   async post(req: Request, res: Response) {
     const customer = customerOrThrow(req)
 
