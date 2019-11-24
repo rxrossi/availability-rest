@@ -193,7 +193,7 @@ describe("GET /v1/bookings", () => {
       })
 
       //@ts-ignore
-      await Professional.query().upsertGraph({
+      const professional = await Professional.query().upsertGraph({
         name: "Mary Doe",
         password: "123456",
         email: "mary@example.org",
@@ -222,9 +222,13 @@ describe("GET /v1/bookings", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${token}`)
         .then(response => {
-          expect(response.body).toMatchObject([
+          expect(response.body).toEqual([
             {
-              customerId: customer.id,
+              id: expect.any(Number),
+              professional: {
+                id: expect.any(Number),
+                name: professional.name
+              },
               dateTime: "2019-11-18T09:30:00.000Z"
             }
           ])
