@@ -21,10 +21,11 @@ export default class ProfessionalsController {
     }
 
     const professionals = await professionalsQuery
+    //console.log(JSON.stringify(professionals, null, 2))
 
     res.json(
       compose(
-        map(omit("bookings")),
+        map(omit(["bookings", "availabilities"])),
         professionals =>
           isQueryingForAvailability
             ? addBookingSlots(availableFrom, availableTo, professionals)
@@ -84,16 +85,14 @@ function filterByAvailabilityAndAddRelevantBookings(
           "professionals.id",
           "availabilities.professional_id"
         )
-        .andWhere(
-          "availabilities.start",
-          "<=",
-          fromDateStringToWeeksFromWeekStart(availableFrom)
-        )
-        .andWhere(
-          "availabilities.end",
-          ">=",
+        .andWhereBetween("availabilities.start", [
+          fromDateStringToWeeksFromWeekStart(availableFrom),
           fromDateStringToWeeksFromWeekStart(availableTo)
-        )
+        ])
+        .orWhereBetween("availabilities.end", [
+          fromDateStringToWeeksFromWeekStart(availableFrom),
+          fromDateStringToWeeksFromWeekStart(availableTo)
+        ])
         .leftJoin("bookings", function(join) {
           join
             .on("professionals.id", "bookings.professional_id")
@@ -107,12 +106,24 @@ function filterByAvailabilityAndAddRelevantBookings(
     .orWhere("interval_to_previous_booking", null)
     .orWhere("interval_to_next_booking", ">=", 2)
     .orWhere("interval_to_next_booking", null)
-    .eager("bookings")
+    .eager("[bookings, availabilities]")
     .modifyEager("bookings", builder =>
       builder
         .andWhere("bookings.date_time", ">=", fromISODateMinus30min)
         .andWhere("bookings.date_time", "<=", toISOPlus30min)
         .select("date_time")
+    )
+    .modifyEager("availabilities", builder =>
+      builder
+        .andWhereBetween("availabilities.start", [
+          fromDateStringToWeeksFromWeekStart(availableFrom),
+          fromDateStringToWeeksFromWeekStart(availableTo)
+        ])
+        .orWhereBetween("availabilities.end", [
+          fromDateStringToWeeksFromWeekStart(availableFrom),
+          fromDateStringToWeeksFromWeekStart(availableTo)
+        ])
+        .select("start", "end")
     )
 }
 
@@ -151,17 +162,30 @@ function addBookingSlots(
     bookingSlots: Array.from(
       Array(possibleSlotsGivenQueryDateRange),
       (_, index) => DateTime.fromISO(fromISODate).plus({ minutes: 30 * index })
-    ).filter(
-      dateTime =>
-        professional.bookings
-          .map(booking => {
-            return Math.abs(
-              DateTime.fromJSDate(booking.dateTime)
-                .diff(dateTime, "minutes")
-                .toObject().minutes!
-            )
-          })
-          .filter(interval => interval < 60).length === 0
     )
+      .filter(
+        dateTime =>
+          professional.bookings
+            .map(booking => {
+              return Math.abs(
+                DateTime.fromJSDate(booking.dateTime)
+                  .diff(dateTime, "minutes")
+                  .toObject().minutes!
+              )
+            })
+            .filter(interval => interval < 60).length === 0
+      )
+      .filter(dateTime => {
+        return professional.availabilities.find(availability => {
+          return (
+            availability.start <=
+              fromDateStringToWeeksFromWeekStart(dateTime.toISO()) &&
+            availability.end >=
+              fromDateStringToWeeksFromWeekStart(
+                dateTime.plus({ hours: 1 }).toISO()
+              )
+          )
+        })
+      })
   }))
 }
