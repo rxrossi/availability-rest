@@ -12,7 +12,7 @@ describe("GET /v1/professional", () => {
       const monday9am = "2019-11-18T09:00:00.000Z"
       const monday9and30am = "2019-11-18T09:30:00.000Z"
       const monday10am = "2019-11-18T10:00:00.000Z"
-      const monday12pm = "2019-11-18T12:00:00.000Z"
+      const monday6pm = "2019-11-18T18:00:00.000Z"
 
       await Professional.query()
         //@ts-ignore
@@ -39,9 +39,9 @@ describe("GET /v1/professional", () => {
               {
                 dateTime: monday10am,
                 customer: {
-                  name: "Ana Holder 3",
+                  name: "Beatrice Clark",
                   password: "123456",
-                  email: "hana3@example.org"
+                  email: "clark.b@example.org"
                 }
               }
             ]
@@ -54,6 +54,10 @@ describe("GET /v1/professional", () => {
               {
                 start: 1980, // Monday 9am
                 end: 2160 // Monday 12pm
+              },
+              {
+                start: 2280, // Monday 2pm
+                end: 2520 // Monday 6pm
               }
             ]
           }
@@ -61,7 +65,7 @@ describe("GET /v1/professional", () => {
 
       await app
         .get(
-          `/v1/professionals?availableFrom=${monday9and30am}&availableTo=${monday12pm}`
+          `/v1/professionals?availableFrom=${monday9and30am}&availableTo=${monday6pm}`
         )
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
@@ -71,11 +75,7 @@ describe("GET /v1/professional", () => {
             {
               id: expect.any(Number),
               name: "Mary Doe",
-              bookingSlots: [
-                "2019-11-18T11:00:00.000-00:00",
-                "2019-11-18T11:30:00.000-00:00",
-                "2019-11-18T12:00:00.000-00:00"
-              ]
+              bookingSlots: ["2019-11-18T11:00:00.000-00:00"]
             },
             {
               id: expect.any(Number),
@@ -85,8 +85,13 @@ describe("GET /v1/professional", () => {
                 "2019-11-18T10:00:00.000-00:00",
                 "2019-11-18T10:30:00.000-00:00",
                 "2019-11-18T11:00:00.000-00:00",
-                "2019-11-18T11:30:00.000-00:00",
-                "2019-11-18T12:00:00.000-00:00"
+                "2019-11-18T14:00:00.000-00:00",
+                "2019-11-18T14:30:00.000-00:00",
+                "2019-11-18T15:00:00.000-00:00",
+                "2019-11-18T15:30:00.000-00:00",
+                "2019-11-18T16:00:00.000-00:00",
+                "2019-11-18T16:30:00.000-00:00",
+                "2019-11-18T17:00:00.000-00:00"
               ]
             }
           ])
@@ -154,9 +159,7 @@ describe("GET /v1/professional", () => {
                 "2019-11-18T09:30:00.000-00:00",
                 "2019-11-18T10:00:00.000-00:00",
                 "2019-11-18T10:30:00.000-00:00",
-                "2019-11-18T11:00:00.000-00:00",
-                "2019-11-18T11:30:00.000-00:00",
-                "2019-11-18T12:00:00.000-00:00"
+                "2019-11-18T11:00:00.000-00:00"
               ]
             }
           ])
