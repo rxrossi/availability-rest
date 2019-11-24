@@ -10,7 +10,9 @@
     "prebuild": "rm -rf build/*",
     "build": "tsc",
     "lint": "eslint 'src/**/*'",
-    "migration:make": "knex migrate:make -x ts"
+    "migration:make": "knex migrate:make -x ts",
+    "migration:latest": "knex migrate:latest",
+    "seeds": "ts-node src/seeds.ts"
   },
   "keywords": [],
   "author": "",

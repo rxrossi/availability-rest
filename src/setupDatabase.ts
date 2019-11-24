@@ -3,11 +3,17 @@ import { Model } from "objection"
 import { knexConfigKey } from "./environment"
 import knexConfigs from "../knexfile"
 
-export default async function setupDatabase(): Promise<Knex> {
+export default async function setupDatabase({
+  skipMigrations = true
+}: {
+  skipMigrations?: boolean
+} = {}): Promise<Knex> {
   const knexConfig = knexConfigs[knexConfigKey()]
   const knex = Knex(knexConfig)
 
-  await knex.migrate.latest().catch(console.error)
+  if (!skipMigrations) {
+    await knex.migrate.latest().catch(console.error)
+  }
 
   Model.knex(knex)
 
