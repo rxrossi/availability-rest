@@ -6,16 +6,16 @@ This API uses PostgreSQL 11.5 and Node.js 12.13.0.
 
 ## Environment variables
 
-DATABASE_URL - The URL for PostgreSQL database if it is remote, if running locally, do not set it
-JWT_TOKEN_SECRET = A string used to generate JWT tokens
+- DATABASE_URL - The URL for PostgreSQL database if it is remote, if running locally, do not set it
+- JWT_TOKEN_SECRET = A string used to generate JWT tokens
 
 ## Terms
-Professional - Person who provides services
-Customer - Person who books professional's time
-User - a Customer or professional
-Date - YYYY-MM-DD
-DateTime = YYYY-MM-DDThh:mm:ss.sss
-ISODateString = YYYY-MM-DDThh:mm:ss.sss
+- Professional - Person who provides services
+- Customer - Person who books professional's time
+- User - a Customer or professional
+- Date - YYYY-MM-DD
+- DateTime = YYYY-MM-DDThh:mm:ss.sss
+- ISODateString = YYYY-MM-DDThh:mm:ss.sss
 
 ## Setup
 
@@ -94,7 +94,7 @@ It is necessary to be authenticated as a professional to use this route, and res
 
 ## Getting all professionals available in a range of time
 
-GET /v1/professionals?availableFrom=ISODateString&availableTo=ISODateString
+GET  `/v1/professionals?availableFrom=ISODateString&availableTo=ISODateString`
 
 ## Booking a time slot
 
