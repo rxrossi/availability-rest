@@ -157,10 +157,78 @@ describe("POST /v1/bookings", () => {
 
 describe("GET /v1/bookings", () => {
   describe("when the customer does not have any bookings", () => {
-    it.todo("returns an empty array")
+    it("returns an empty array", async () => {
+      const app = request(server)
+
+      const customer = await Customer.query().insert({
+        name: "Jane Jackson",
+        password: "123456",
+        email: "jane.jackson@example.org"
+      })
+
+      const token = createToken({
+        email: customer.email,
+        userId: customer.id,
+        userType: UserType.Customer
+      })
+
+      await app
+        .get("/v1/bookings")
+        .set("Accept", "application/json")
+        .set("Authorization", `Bearer ${token}`)
+        .then(response => {
+          expect(response.body).toEqual([])
+        })
+    })
   })
 
   describe("when the customer has a booking", () => {
-    it.todo("returns an array with the booking information")
+    it("returns an array with the booking information", async () => {
+      const app = request(server)
+
+      const customer = await Customer.query().insert({
+        name: "Jane Jackson",
+        password: "123456",
+        email: "jane.jackson@example.org"
+      })
+
+      //@ts-ignore
+      await Professional.query().upsertGraph({
+        name: "Mary Doe",
+        password: "123456",
+        email: "mary@example.org",
+        availabilities: [
+          {
+            start: 1980, // Monday 9am
+            end: 2160 // Monday 12pm
+          }
+        ],
+        bookings: [
+          {
+            customerId: customer.id,
+            dateTime: "2019-11-18T09:30:00.000Z"
+          }
+        ]
+      })
+
+      const token = createToken({
+        email: customer.email,
+        userId: customer.id,
+        userType: UserType.Customer
+      })
+
+      await app
+        .get("/v1/bookings")
+        .set("Accept", "application/json")
+        .set("Authorization", `Bearer ${token}`)
+        .then(response => {
+          expect(response.body).toMatchObject([
+            {
+              customerId: customer.id,
+              dateTime: "2019-11-18T09:30:00.000Z"
+            }
+          ])
+        })
+    })
   })
 })
