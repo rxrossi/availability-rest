@@ -21,7 +21,6 @@ export default class ProfessionalsController {
     }
 
     const professionals = await professionalsQuery
-    //console.log(JSON.stringify(professionals, null, 2))
 
     res.json(
       compose(
