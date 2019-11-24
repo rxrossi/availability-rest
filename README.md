@@ -26,8 +26,6 @@ npm run build
 npm start
 ```
 
-If you want initial data, you can run `npm run seeds`
-
 You can also use a external database by providing a url on env var `DATABASE_URL`, this way the `createdb` step would not be needed.
 
 ## Running tests
@@ -41,6 +39,22 @@ npm test
 It is also possible to run in watch mode with `npm run test:watch`
 
 ## Usage
+
+### Login
+
+It is necessary to run `npm run seeds`, this will add 2 customers and 2 professionals, check src/seeds for more information about them.
+
+The do a POST at /v1/login with the payload in the following format
+
+```js
+  {
+    email: string,
+    password: string
+  }
+```
+
+If the correct credentials are sent, a JWT token will be returned, use it on request in the standard form `Bearer token`
+
 
 ### Reading and updating availability of professionals
 
