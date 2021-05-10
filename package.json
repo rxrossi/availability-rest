@@ -50,7 +50,7 @@
     "express-joi-validation": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "luxon": "^1.21.1",
     "objection": "^1.6.11",
     "pg": "^7.12.1"
